@@ -754,7 +754,7 @@ function renderSession(){
     '<div><div class="row" style="flex-wrap:wrap"><span class="chip" id="elapsed">0:00</span><span class="sub" id="progtxt">'+dn+' / '+all+' séries</span><span class="sub" id="remain"></span></div>'+
     '<h1 style="margin-top:10px">'+esc(day.name)+'</h1>'+
     '<div class="prog"><i id="progbar" style="width:'+(all?Math.round(dn/all*100):0)+'%"></i></div>'+
-    '<p class="hint">Échauffement : 5 min de mobilité, puis une série très légère du premier exercice.</p>'+(d.fit?'<p class="hint">'+esc(d.fit)+'</p>':'')+'<p class="banner" id="over" hidden></p></div>'+
+    (d.fit?'<p class="hint">'+esc(d.fit)+'</p>':'')+'<p class="banner" id="over" hidden></p></div>'+
     d.exs.map((_,i)=>exCard(i)).join('')+
     '<div class="stack" style="margin-top:20px"><button class="btn ghost block" data-act="addex" data-m="session">Ajouter un exercice</button><button class="btn day block" data-act="finish">Terminer la séance</button><button class="btn ghost block" data-act="abandon">Abandonner la séance</button></div></div>';
 }
