@@ -1,5 +1,5 @@
-const VERSION='carnet-muscu-v6';
-const ASSETS=['./','index.html','manifest.webmanifest',
+const VERSION='carnet-muscu-v7';
+const ASSETS=['./','index.html','fig3d.js','manifest.webmanifest',
   'icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-512.png','icons/apple-touch-icon.png',
   'fonts/big-shoulders-display-latin-700-normal.woff2','fonts/big-shoulders-display-latin-800-normal.woff2',
   'fonts/instrument-sans-latin-400-normal.woff2','fonts/instrument-sans-latin-500-normal.woff2',
