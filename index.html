@@ -89,16 +89,25 @@ h3{font:700 22px/1.1 var(--display)}
 .prog i{display:block;height:100%;background:var(--day);border-radius:3px;transition:width .25s}
 .hint{font-size:13px;color:var(--ink2);margin-top:10px}
 .excard{padding:14px 14px 12px}
-.excard h3{font-size:25px}
-.tgt{font-size:13px;font-weight:600;color:var(--ink2);margin-top:2px}
-.last{font-size:13px;color:var(--ink2);margin-top:8px}
+.excard h3{font-size:26px;line-height:1.05}
+.exhead{display:flex;align-items:center;gap:11px}
+.exno{flex:none;width:32px;height:32px;border-radius:50%;background:var(--day);color:var(--on-day);display:grid;place-items:center;font:800 18px/1 var(--display)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:12px;background:var(--chip);border-radius:12px}
+.stats>div{padding:9px 4px 8px;text-align:center;min-width:0}
+.stats>div+div{border-left:1px solid var(--line)}
+.stats b{display:block;font:800 23px/1 var(--display);letter-spacing:.01em}
+.stats span{display:block;margin-top:4px;font-size:11.5px;color:var(--mute)}
+.last{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--ink2);margin-top:12px}
+.last svg{flex:none;margin-top:1px;color:var(--mute)}
 .last b{color:var(--ink)}
-.obj{font-size:13px;margin-top:2px;font-weight:600;color:var(--ink)}
-details.tip{margin-top:8px}
-details.tip summary{font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer;list-style:none;padding:4px 0}
+.obj{font-size:13px;line-height:1.4;margin-top:8px;padding:8px 10px;border-radius:10px;border-left:3px solid var(--day);background:color-mix(in srgb,var(--day) 11%,var(--card));font-weight:600;color:var(--ink)}
+details.tip{margin-top:12px}
+details.tip summary{display:flex;align-items:center;gap:9px;min-height:46px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;list-style:none}
 details.tip summary::-webkit-details-marker{display:none}
-details.tip summary::after{content:' +'}
-details.tip[open] summary::after{content:' −'}
+details.tip summary::after{content:'';margin-left:auto;width:8px;height:8px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+details.tip[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+details.tip summary .pl{flex:none;width:24px;height:24px;border-radius:50%;background:var(--day);color:var(--on-day);display:grid;place-items:center}
+details.tip[open] summary{border-color:color-mix(in srgb,var(--day) 55%,var(--line))}
 details.tip p{font-size:14px;color:var(--ink2);padding:2px 0 4px}
 .sethead,.set{display:grid;grid-template-columns:26px 1fr 1fr 48px;gap:8px;align-items:center}
 .sethead.nokg,.set.nokg{grid-template-columns:26px 1fr 48px}
@@ -740,10 +749,12 @@ function exCard(i){
     (kg?'<input data-in="kg" data-i="'+i+'" data-j="'+j+'" type="text" inputmode="decimal" autocomplete="off" value="'+esc(s.kg)+'" aria-label="Charge de la série '+(j+1)+' en kilos">':'')+
     '<input data-in="reps" data-i="'+i+'" data-j="'+j+'" type="text" inputmode="numeric" autocomplete="off" value="'+esc(s.reps)+'" aria-label="'+(ex.time?'Secondes':'Répétitions')+' de la série '+(j+1)+'">'+
     '<button class="chk" data-act="toggle" data-i="'+i+'" data-j="'+j+'" aria-pressed="'+(s.done?'true':'false')+'" aria-label="Valider la série '+(j+1)+'">'+CHECK+'</button></div>').join('');
+  const nS=dx.sets.length,unit=ex.time?'secondes':(ex.side?'reps par côté':'reps');
   return '<article class="card excard" id="ex'+i+'">'+
-    '<h3>'+esc(ex.name)+'</h3><div class="tgt">'+tgt+', repos '+ex.rest+' s</div>'+
-    '<div class="last">'+lastTxt+'</div>'+(sg.text?'<div class="obj">'+esc(sg.text)+'</div>':'')+
-    '<details class="tip"><summary>Voir le mouvement</summary><div class="figbox">'+figBlock(ex.id)+'</div><p>'+esc(tipOf(ex))+'</p><a class="vid" href="'+videoUrl(ex)+'" target="_blank" rel="noopener noreferrer">Voir une vidéo (YouTube)</a></details>'+
+    '<div class="exhead"><span class="exno" aria-hidden="true">'+(i+1)+'</span><h3>'+esc(ex.name)+'</h3></div>'+
+    '<div class="stats"><div><b>'+nS+'</b><span>'+(nS>1?'séries':'série')+'</span></div><div><b>'+ex.reps[0]+'–'+ex.reps[1]+'</b><span>'+unit+'</span></div><div><b>'+ex.rest+' s</b><span>de repos</span></div></div>'+
+    '<div class="last"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>'+lastTxt+'</span></div>'+(sg.text?'<div class="obj">'+esc(sg.text)+'</div>':'')+
+    '<details class="tip"><summary><span class="pl" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>Voir le mouvement</summary><div class="figbox">'+figBlock(ex.id)+'</div><p>'+esc(tipOf(ex))+'</p><a class="vid" href="'+videoUrl(ex)+'" target="_blank" rel="noopener noreferrer">Voir une vidéo (YouTube)</a></details>'+
     '<div class="sethead'+(kg?'':' nokg')+'"><span>#</span>'+(kg?'<span>kg</span>':'')+'<span>'+(ex.time?'secondes':'reps')+'</span><span></span></div>'+rows+
     '<div class="exfoot"><div class="stepper" role="group" aria-label="Nombre de séries"><button data-act="delset" data-i="'+i+'" aria-label="Retirer une série"'+(dx.sets.length<=1?' disabled':'')+'>−</button><span aria-live="polite">'+dx.sets.length+(dx.sets.length>1?' séries':' série')+'</span><button data-act="addset" data-i="'+i+'" aria-label="Ajouter une série"'+(dx.sets.length>=8?' disabled':'')+'>+</button></div><button class="skipbtn" data-act="skipex" data-i="'+i+'">Passer l\'exo<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l8 7-8 7z"/><path d="M19 5v14"/></svg></button></div>'+
   '</article>';
