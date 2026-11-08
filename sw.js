@@ -1,4 +1,4 @@
-const VERSION='carnet-muscu-v7';
+const VERSION='carnet-muscu-v8';
 const ASSETS=['./','index.html','fig3d.js','manifest.webmanifest',
   'icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-512.png','icons/apple-touch-icon.png',
   'fonts/big-shoulders-display-latin-700-normal.woff2','fonts/big-shoulders-display-latin-800-normal.woff2',
